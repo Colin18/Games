@@ -1,5 +1,6 @@
 from tkinter import *
 
+#Adds variables & calls functions
 class Application(Frame):
     def __init__(self, master):
         super(Application, self).__init__(master)
@@ -13,7 +14,8 @@ class Application(Frame):
         self.Gmultiple = 0
         self.create_widgets()
         self.more_widgets()
-
+        
+    #First widgets to count user clicks
     def create_widgets(self):
         self.total_money = Label(self, text="Total money: $0.00")
         self.total_money.grid(row=0, column=0, sticky=W)
@@ -27,6 +29,7 @@ class Application(Frame):
         self.clicks_money = Label(self, text="Money from clicks: $0.00")
         self.clicks_money.grid(row=2, column=0, sticky=W)
 
+    #Other widgets to have a lemonade stand
     def more_widgets(self):
         self.lemon = Button(self, text="Lemonade Stands: 0 (cost=$250)", command=self.lemonade)
         self.lemon.grid(row=4, column=0, sticky=W)
@@ -37,6 +40,7 @@ class Application(Frame):
         self.lemon_money = Label(self, text="Money from lemonade stand: $0.00")
         self.lemon_money.grid(row=5, column=0, sticky=W)
 
+    #Receive money each click & add multiplier after every 10 clicks
     def times_clicked(self):                                 
         if self.clicks % 10 == 0 and self.clicks != 0:
             self.multiple += 0.1
@@ -49,6 +53,7 @@ class Application(Frame):
         self.num_clicks["text"] = "Number of Clicks: " + str(self.clicks)
         self.clicks_money["text"] = "Money from clicks: $" + str(round((self.Cmoney),2))
 
+    #Cost of lemonade stand & how many you have
     def lemonade(self):
         if self.money >= 250:
             self.Lstand += 1
@@ -64,6 +69,7 @@ root.geometry("600x250")
 
 app = Application(root)
 
+#Receive money from lemonade stand every 0.1 seconds
 def second():
     app.money += round(app.Gmultiple / 10, 2)
     app.Gmoney += round(app.Gmultiple / 10, 2)
