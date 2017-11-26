@@ -1,6 +1,6 @@
 from tkinter import *
 
-class Colin(Frame):
+class Application(Frame):
     def __init__(self, master):
         super(Colin, self).__init__(master)
         self.grid()
@@ -59,16 +59,16 @@ class Colin(Frame):
             self.multi_lemon_money["text"] = "$" + str(self.Gmultiple) + " per second"
         
 root = Tk()
-root.title("Game")
+root.title("Capitalism")
 root.geometry("600x250")
 
-frame = Colin(root)
+app = Application(root)
 
 def second():
-    frame.money += round(frame.Gmultiple / 10, 2)
-    frame.Gmoney += round(frame.Gmultiple / 10, 2)
-    frame.total_money["text"] = "Total money: $" + str(round((frame.money),2))
-    frame.lemon_money["text"] = "Money from lemonade stand: $" + str(round((frame.Gmoney),2))
+    app.money += round(app.Gmultiple / 10, 2)
+    app.Gmoney += round(app.Gmultiple / 10, 2)
+    app.total_money["text"] = "Total money: $" + str(round((app.money),2))
+    app.lemon_money["text"] = "Money from lemonade stand: $" + str(round((app.Gmoney),2))
     root.after(100, second)
 
 root.after(100, second)
