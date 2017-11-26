@@ -1,0 +1,75 @@
+from tkinter import *
+
+class Colin(Frame):
+    def __init__(self, master):
+        super(Colin, self).__init__(master)
+        self.grid()
+        self.money = 0.00
+        self.clicks = 0
+        self.Cmoney = 0.00
+        self.multiple = 1.00
+        self.Gmoney = 0.00
+        self.Lstand = 0
+        self.Gmultiple = 0
+        self.create_widgets()
+        self.more_widgets()
+
+    def create_widgets(self):
+        self.total_money = Label(self, text="Total money: $0.00")
+        self.total_money.grid(row=0, column=0, sticky=W)
+        
+        self.num_clicks = Button(self, text="Number of Clicks: 0", command=self.times_clicked)
+        self.num_clicks.grid(row=1, column=0, sticky=W)
+
+        self.multi_money = Label(self, text="1.0x money")
+        self.multi_money.grid(row=1, column=0, sticky=E)
+
+        self.clicks_money = Label(self, text="Money from clicks: $0.00")
+        self.clicks_money.grid(row=2, column=0, sticky=W)
+
+    def more_widgets(self):
+        self.lemon = Button(self, text="Lemonade Stands: 0 (cost=$250)", command=self.lemonade)
+        self.lemon.grid(row=4, column=0, sticky=W)
+        
+        self.multi_lemon_money = Label(self, text="$0 per second")
+        self.multi_lemon_money.grid(row=4, column=1, sticky=W)
+
+        self.lemon_money = Label(self, text="Money from lemonade stand: $0.00")
+        self.lemon_money.grid(row=5, column=0, sticky=W)
+
+    def times_clicked(self):                                 
+        if self.clicks % 10 == 0 and self.clicks != 0:
+            self.multiple += 0.1
+            self.multi_money["text"] = str(round((self.multiple),1)) + "x money"
+        
+        self.clicks += 1
+        self.Cmoney += 2 * self.multiple
+        self.money += 2 * self.multiple
+        self.total_money["text"] = "Total money: $" + str(round((self.money),2))
+        self.num_clicks["text"] = "Number of Clicks: " + str(self.clicks)
+        self.clicks_money["text"] = "Money from clicks: $" + str(round((self.Cmoney),2))
+
+    def lemonade(self):
+        if self.money >= 250:
+            self.Lstand += 1
+            self.Gmultiple += 2
+            self.money -= 250
+            self.total_money["text"] = "Total money: $" + str(round((self.money),2))
+            self.lemon["text"] = "Lemonade Stands: " + str(self.Lstand) + " (cost=$250)"
+            self.multi_lemon_money["text"] = "$" + str(self.Gmultiple) + " per second"
+        
+root = Tk()
+root.title("Game")
+root.geometry("600x250")
+
+frame = Colin(root)
+
+def second():
+    frame.money += round(frame.Gmultiple / 10, 2)
+    frame.Gmoney += round(frame.Gmultiple / 10, 2)
+    frame.total_money["text"] = "Total money: $" + str(round((frame.money),2))
+    frame.lemon_money["text"] = "Money from lemonade stand: $" + str(round((frame.Gmoney),2))
+    root.after(100, second)
+
+root.after(100, second)
+root.mainloop()
